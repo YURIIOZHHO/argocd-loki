@@ -1,52 +1,30 @@
 apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
+kind: Application
 metadata:
-  name: psmdb-mongodb
+  name: mongodb-eks
   namespace: argocd
 spec:
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUpdate: 1
-  generators:
-    - list:
-        elements:
-          - name: psmdb-crds
-            repoURL: https://percona.github.io/percona-helm-charts/
-            chart: psmdb-operator-crds
-            targetRevision: 1.22.0
-          - name: psmdb-operator
-            repoURL: https://percona.github.io/percona-helm-charts/
-            chart: psmdb-operator
-            targetRevision: 1.22.0
-          - name: psmdb-instance
-            repoURL: "https://github.com/YURIIOZHHO/argocd-test.git"
-            path: "charts/mongodb-eks/dev"
-            targetRevision: main
-  template:
-    metadata:
-      name: '{{name}}'
-      annotations:
-        argocd.argoproj.io/sync-wave: |
-          {{- if eq name "psmdb-crds" }}0{{- end}}
-          {{- if eq name "psmdb-operator" }}1{{- end}}
-          {{- if eq name "psmdb-instance" }}2{{- end}}
-    spec:
-      project: default
-      source:
-        repoURL: '{{repoURL}}'
-        chart: '{{chart}}'
-        path: '{{path}}'
-        targetRevision: '{{targetRevision}}'
-      destination:
-        server: https://kubernetes.default.svc
-        namespace: mongodb-eks
-      syncPolicy:
-        automated:
-          prune: true
-          selfHeal: true
-        syncOptions:
-          - CreateNamespace=true
-          - SkipDryRunOnMissingResource=true
-          # Вимикаємо ServerSideApply лише для CRD, щоб уникнути занадто довгих annotations
-          - "{{- if eq name 'psmdb-crds' }}ServerSideApply=false{{- end}}"
+  destination:
+    name: in-cluster
+    namespace: mongodb-eks
+  sources:
+    - chart: psmdb-operator-crds
+      repoURL: https://percona.github.io/percona-helm-charts/
+      targetRevision: 1.22.0
+    # - chart: psmdb-operator
+    #   repoURL: https://percona.github.io/percona-helm-charts/
+    #   targetRevision: 1.22.0
+    # - repoURL: "https://github.com/YURIIOZHHO/argocd-test.git"
+    #   path: "charts/mongodb-eks/dev"
+    #   targetRevision: main
+      # helm:
+      #   valueFiles:
+      #     - values_dev.yaml
+  project: default
+  syncPolicy:
+    automated:
+      prune   : true
+      selfHeal: true
+    # syncOptions:
+    #   - SkipDryRunOnMissingResource=true
+    #   - ServerSideApply=true
