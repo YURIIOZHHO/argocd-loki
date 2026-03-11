@@ -4,26 +4,25 @@ metadata:
   name: psmdb-mongodb
   namespace: argocd
 spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUpdate: 1
   generators:
     - list:
         elements:
-          - name: crds
+          - name: psmdb-01-crds
             repoURL: https://percona.github.io/percona-helm-charts/
             chart: psmdb-operator-crds
             targetRevision: 1.22.0
-            path: ""
-            namespace: mongodb-eks
-          - name: operator
+          - name: psmdb-02-operator
             repoURL: https://percona.github.io/percona-helm-charts/
             chart: psmdb-operator
             targetRevision: 1.22.0
-            path: ""
-            namespace: mongodb-eks
-          - name: mongodb-cr
+          - name: psmdb-03-instance
             repoURL: "https://github.com/YURIIOZHHO/argocd-test.git"
             path: "charts/mongodb-eks/dev"
             targetRevision: main
-            namespace: mongodb-eks
   template:
     metadata:
       name: '{{name}}'
@@ -32,17 +31,16 @@ spec:
       source:
         repoURL: '{{repoURL}}'
         chart: '{{chart}}'
-        path: '{{path}}'
+        path: '{{path}}'   
         targetRevision: '{{targetRevision}}'
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{namespace}}'
+        namespace: mongodb-eks
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
-  strategy:
-    hook:
-      dependsOn:
-        - crds
-        - operator
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+          - SkipDryRunOnMissingResource=true
