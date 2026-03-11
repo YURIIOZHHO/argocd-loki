@@ -11,15 +11,15 @@ spec:
     - chart: psmdb-operator-crds
       repoURL: https://percona.github.io/percona-helm-charts/
       targetRevision: 1.22.0
-    # - chart: psmdb-operator
-    #   repoURL: https://percona.github.io/percona-helm-charts/
-    #   targetRevision: 1.22.0
-    # - repoURL: "https://github.com/YURIIOZHHO/argocd-test.git"
-    #   path: "charts/mongodb-eks/dev"
-    #   targetRevision: main
-      # helm:
-      #   valueFiles:
-      #     - values_dev.yaml
+    - chart: psmdb-operator
+      repoURL: https://percona.github.io/percona-helm-charts/
+      targetRevision: 1.22.0
+    - repoURL: "https://github.com/YURIIOZHHO/argocd-test.git"
+      path: "charts/mongodb-eks/dev"
+      targetRevision: main
+      helm:
+        valueFiles:
+          - values_dev.yaml
   project: default
   syncPolicy:
     automated:
