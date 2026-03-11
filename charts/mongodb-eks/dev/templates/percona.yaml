@@ -1,0 +1,42 @@
+apiVersion: psmdb.percona.com/v1
+kind: PerconaServerMongoDB
+metadata:
+  name: mongodb-eks
+  namespace: mongodb-eks
+spec:
+  crVersion: 1.22.0
+  image: percona/percona-server-mongodb:8.0.19-7
+  imagePullPolicy: Always
+  # unsafeFlags:
+  #   replsetSize: true
+  replsets:
+    - name: main
+      size: 3
+      serviceAccountName: percona-backup-sa
+      volumeSpec:
+        persistentVolumeClaim:
+          storageClassName: gp2
+          accessModes: 
+           - "ReadWriteOnce"
+          resources:
+            requests:
+              storage: 20Gi
+  backup:
+    enabled: true
+    image: percona/percona-backup-mongodb:2.12.0
+    storages:
+      s3-percona-test-05-03-2026:
+        type: s3
+        s3:
+          bucket: "s3-percona-test-05-03-2026"
+          region: "eu-central-1"
+    tasks:
+     - name: "test-backup"
+       enabled: true
+       schedule: "13 7 * * *"
+       retention:
+          count: 3
+          type: count
+          deleteFromStorage: true
+       type: physical
+       storageName: s3-percona-test-05-03-2026
