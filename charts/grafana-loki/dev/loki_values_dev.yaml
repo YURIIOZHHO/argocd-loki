@@ -1,26 +1,26 @@
+chunksCache:
+  enabled: true
+  memcached:
+    resources:
+      requests:
+        memory: 256Mi
+        cpu: 100m
+      limits:
+        memory: 512Mi
+        cpu: 200m
+
+# resultsCache:
+#   enabled: true
+#   resources:
+#     requests:
+#       memory: 128Mi
+#       cpu: 50m
+#     limits:
+#       memory: 256Mi
+#       cpu: 100m
+
+
 loki:
-  chunksCache:
-    enabled: true
-    memcached:
-
-      resources:
-        requests:
-          memory: 256Mi
-          cpu: 100m
-        limits:
-          memory: 512Mi
-          cpu: 200m
-    exporter:
-  
-      enabled: true
-      resources:
-        requests:
-          memory: 128Mi
-          cpu: 50m
-        limits:
-          memory: 256Mi
-          cpu: 100m
-
   schemaConfig:
     configs:
       - from: "2024-04-01"
@@ -90,5 +90,4 @@ gateway:
 # Enable minio for storage
 minio:
   enabled: true
-
 
