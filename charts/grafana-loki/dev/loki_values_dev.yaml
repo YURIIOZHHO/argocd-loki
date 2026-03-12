@@ -1,4 +1,22 @@
 loki:
+   chunksCache:
+     memcached:
+       resources:
+         requests:
+           memory: 1Gi
+           cpu: 500m
+         limits:
+           memory: 2Gi
+           cpu: 1
+   exporter:
+     resources:
+       requests:
+         memory: 256Mi
+         cpu: 100m
+       limits:
+         memory: 512Mi
+         cpu: 200m
+
    schemaConfig:
      configs:
        - from: "2024-04-01"
@@ -58,25 +76,6 @@ write:
 
 singleBinary:
    replicas: 0
-
-
-chunksCache:
-  memcached:
-    resources:
-      requests:
-        memory: 1Gi
-        cpu: 500m
-      limits:
-        memory: 2Gi
-        cpu: 1
-  exporter:
-    resources:
-      requests:
-        memory: 256Mi
-        cpu: 100m
-      limits:
-        memory: 512Mi
-        cpu: 200m
 
  # This exposes the Loki gateway so it can be written to and queried externaly
 gateway:
