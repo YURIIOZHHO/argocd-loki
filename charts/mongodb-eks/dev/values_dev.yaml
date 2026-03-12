@@ -1,0 +1,8 @@
+replsets: 
+  size: 3
+serviceAccount:
+  name: percona-backup-sa
+storageClass:
+  name: gp2
+storage:
+  size: 20Gi
