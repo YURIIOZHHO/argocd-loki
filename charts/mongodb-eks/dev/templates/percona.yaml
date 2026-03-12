@@ -12,15 +12,18 @@ spec:
   replsets:
     - name: main
       size: {{ .Values.replsets.size }}
-      serviceAccountName: {{ .Values.serviceAccount.name }}
+    #   serviceAccountName: {{ .Values.serviceAccount.name }}
+      serviceAccountName: percona-backup-sa
       volumeSpec:
         persistentVolumeClaim:
-          storageClassName: {{ .Values.storageClass.name }}
+        #   storageClassName: {{ .Values.storageClass.name }} 
+          storageClassName: gp2
           accessModes: 
            - "ReadWriteOnce"
           resources:
             requests:
-              storage: {{ .Values.storage.size }}
+            #   storage: {{ .Values.storage.size }}
+              storage: 20Gi
   backup:
     enabled: true
     image: percona/percona-backup-mongodb:2.12.0
