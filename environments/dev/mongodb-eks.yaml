@@ -34,9 +34,10 @@ spec:
     - repoURL: "https://github.com/YURIIOZHHO/argocd-test.git"
       path: "charts/mongodb-eks/dev"
       targetRevision: main
-      values: |
-        replsets:
-          size: 3
+      helm:
+        valueFiles:
+          - values_dev.yaml
+
 
   project: default
   syncPolicy:
