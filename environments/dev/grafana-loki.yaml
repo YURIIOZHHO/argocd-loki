@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: grafana-loki
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: grafana-loki
+
+  sources:
+    - repoURL: https://github.com/YURIIOZHHO/argocd-loki
+      targetRevision: main
+      ref: my-configs
+
+    - chart: alloy
+      repoURL: https://grafana.github.io/helm-charts
+      targetRevision: 1.5.0
+      helm:
+        releaseName: alloy
+        valueFiles:
+        - $my-configs/charts/loki/dev/alloy_values_dev.yaml
+
+    - chart: loki
+      repoURL: https://grafana.github.io/helm-charts
+      targetRevision: 6.48.0
+      helm:
+        releaseName: loki
+        valueFiles:
+        - $my-configs/charts/loki/dev/loki_values_dev.yaml
+
+  project: default
+  syncPolicy:
+    automated:
+      prune   : true
+      selfHeal: true
+    # syncOptions:
+      # - SkipDryRunOnMissingResource=true
+      # - ServerSideApply=true
