@@ -19,7 +19,7 @@ spec:
       helm:
         releaseName: alloy
         valueFiles:
-        - $my-configs/charts/loki/dev/alloy_values_dev.yaml
+        - $my-configs/charts/grafana-loki/dev/alloy_values_dev.yaml
 
     - chart: loki
       repoURL: https://grafana.github.io/helm-charts
@@ -27,7 +27,7 @@ spec:
       helm:
         releaseName: loki
         valueFiles:
-        - $my-configs/charts/loki/dev/loki_values_dev.yaml
+        - $my-configs/charts/grafana-loki/dev/loki_values_dev.yaml
 
   project: default
   syncPolicy:
