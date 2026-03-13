@@ -109,6 +109,10 @@ gateway:
 # Enable minio for storage
 minio:
   enabled: true
+  persistence:
+    enabled: true
+    storageClass: gp2
+    size: 5Gi
 
 
 
