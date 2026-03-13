@@ -1,18 +1,19 @@
 loki:
+  # Настройки для компонента memcached-chunks-cache
   chunksCache:
     enabled: true
-    # Настройки самого Memcached
-    memcached:
-      # Это изменит аргумент -m с 8192 на 1024
-      chunk_size: 1024
-    # Настройки ресурсов для Kubernetes (убираем те самые 9830Mi)
+    # Настройки ресурсов пода в Kubernetes
     resources:
       requests:
         cpu: 100m
-        memory: 512Mi
+        memory: 512Mi   # Вместо 9830Mi
       limits:
         cpu: 500m
-        memory: 1Gi
+        memory: 1Gi     # Вместо 9830Mi
+    # Настройки самого процесса memcached
+    memcached:
+      # Этот параметр меняет флаг -m в аргументах запуска
+      chunk_size: 512
 
   schemaConfig:
     configs:
