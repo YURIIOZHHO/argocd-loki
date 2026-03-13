@@ -49,15 +49,15 @@ memcachedChunks:
   enabled: true
   replicas: 2
   extraArgs:
-    - -m 19000
-    - -I 10m
-    - -vvv
+    - -m 1536        # Выделяем 1.5 ГБ внутри процесса (подходит под лимит 2 ГБ)
+    - -I 5m          # Размер чанка (10m может быть много, 5m — стандарт)
+    - -v             # Обычный лог (vvv слишком шумный для прода)
   resources:
     requests:
-      cpu: 500m
+      cpu: 100m      # Уменьшили запрос, чтобы под легче "влез" на ноду
       memory: 1Gi
     limits:
-      cpu: 1
+      cpu: 500m      # Ограничили CPU, чтобы не съел всё на ноде
       memory: 2Gi
 
 compactor:
