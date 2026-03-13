@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name     : grafana
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name     : in-cluster
+    namespace: grafana-loki
+  sources:
+    - chart: grafana
+      repoURL: https://grafana.github.io/helm-charts
+      targetRevision: 10.*
+      helm:
+        releaseName: grafana
+        valueFiles:
+        - $my-configs/charts/grafana-loki/dev/grafana_values_dev.yaml
+
+    - repoURL: "https://github.com/YURIIOZHHO/argocd-loki"
+      targetRevision: main
+      ref: my-configs
+
+  project: default
+  syncPolicy:
+    automated:
+      prune   : true
+      selfHeal: true

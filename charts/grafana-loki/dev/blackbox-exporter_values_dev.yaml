@@ -1,0 +1,24 @@
+replicaCount: 1
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    memory: 128Mi
+
+service:
+  type: ClusterIP
+  port: 9115
+
+config:
+  modules:
+    http_2xx:
+      prober: http
+      timeout: 10s
+      http:
+        valid_status_codes: [200,302,301,304,401,403]
+        method: GET
+    tcp_connect:
+      prober: tcp
+      timeout: 5s

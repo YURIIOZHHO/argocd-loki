@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name     : prometheus
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    name     : in-cluster
+    namespace: grafana-loki
+  sources:
+    - chart: prometheus
+      repoURL: https://prometheus-community.github.io/helm-charts
+      targetRevision: 28.*
+      helm:
+        releaseName: prometheus
+        passCredentials: false
+        valueFiles:
+        - $my-configs/charts/grafana-loki/dev/prometheus_values_dev.yaml
+
+    - repoURL: "https://github.com/YURIIOZHHO/argocd-loki"
+      targetRevision: main
+      ref: my-configs
+
+  project: default
+  syncPolicy:
+    automated:
+      prune   : true
+      selfHeal: true

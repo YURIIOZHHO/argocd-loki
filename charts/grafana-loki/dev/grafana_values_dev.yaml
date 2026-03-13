@@ -1,0 +1,31 @@
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        url: http://prometheus-server.grafana-loki.svc.cluster.local
+        access: proxy
+        isDefault: true
+      - name: Loki
+        type: loki
+        url: http://loki-query-frontend.grafana-loki.svc.cluster.local:3100
+        access: proxy
+# grafana.ini:
+#   database:
+#     type: postgres
+#     host: "dev-platform.clovokrl2mcf.eu-central-1.rds.amazonaws.com:5432"
+#     name: "grafana_db"
+#     user: "monitoring"
+#     password: $__env{GF_DATABASE_PASSWORD}
+#     ssl_mode: require
+
+# envFromSecret: grafana-db-secret
+
+# resources:
+#   requests:
+#     cpu: 500m
+#     memory: 1Gi
+#   limits:
+#     cpu: 1500m
+#     memory: 2Gi

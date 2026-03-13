@@ -1,0 +1,104 @@
+server:
+  retention: "1d"
+
+  global:
+    scrape_interval: 30s
+    evaluation_interval: 30s
+
+  # resources:
+  #   requests:
+  #     cpu: 200m
+  #     memory: 512Mi
+  #   limits:
+  #     memory: 2Gi
+
+  # persistentVolume:
+  #   enabled: true
+  #   size: 20Gi
+  #   accessModes:
+  #     - ReadWriteOnce
+  #   storageClass: gp2
+
+prometheus-node-exporter:
+  enabled: true
+  hostRootFsMount:
+    enabled: true
+
+kube-state-metrics:
+  enabled: true
+
+alertmanager:
+  enabled: false
+
+serverFiles:
+  prometheus.yaml:
+    scrape_configs:
+      - job_name: blackbox-http
+        metrics_path: /probe
+        params:
+          module: [http_2xx]
+        
+
+
+        # static_configs:
+        #   - targets: ["http://api-service.dev-platform.svc.cluster.local:3000/healthcheck/ping"]
+        #     labels:
+        #       service: api-service
+          # - targets: ["http://api-service.dev-platform.svc.cluster.local:3000/healthcheck/ping"]
+          #   labels:
+          #     service: api-service
+          # - targets: ["http://audit-log-service.dev-platform.svc.cluster.local:3002/healthcheck/ping"]
+          #   labels:
+          #     service: audit-log-service
+          # - targets: ["http://notifications-service.dev-platform.svc.cluster.local:3001/healthcheck/ping"]
+          #   labels:
+          #     service: notifications-service
+          # - targets: ["http://a-level-cms-service.dev-platform.svc.cluster.local:1337"]
+          #   labels:
+          #     service: a-level-cms-service
+          # - targets: ["http://strapi-service.dev-platform.svc.cluster.local:1337"]
+          #   labels:
+          #     service: strapi-service
+          # - targets: ["http://subtitle-translator-service.dev-platform.svc.cluster.local:8501"]
+          #   labels:
+          #     service: subtitle-translator-service
+          # - targets: ["https://dev.atschool.click/sign-in"]
+          #   labels:
+          #     service: front-office-service
+          # - targets: ["https://back-office.dev.atschool.click/sign-in"]
+          #   labels:
+          #     service: back-office-service
+        # relabel_configs:
+          # - source_labels: [__address__]
+          #   target_label: __param_target
+          # - source_labels: [__param_target]
+          #   target_label: instance
+          # - target_label: __address__
+          #   replacement: prometheus-blackbox-exporter.dev-tools.svc.cluster.local:9115
+
+      # - job_name: blackbox-tcp
+      #   metrics_path: /probe
+      #   params:
+      #     module: [tcp_connect]
+
+      #   static_configs:
+      #     - targets: ["redis-service.dev-platform.svc.cluster.local:6379"]
+      #       labels:
+      #         service: redis-service
+      #     - targets: ["mongodb-service.dev-platform.svc.cluster.local:27017"]
+      #       labels:
+      #         service: mongodb-service
+      #     - targets: ["zookeeper-service.dev-platform.svc.cluster.local:2181"]
+      #       labels:
+      #         service: zookeeper-service
+      #     - targets: ["kafka-service.dev-platform.svc.cluster.local:9092"]
+      #       labels:
+      #         service: kafka-service
+
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: prometheus-blackbox-exporter.grafana-loki.svc.cluster.local:9115
