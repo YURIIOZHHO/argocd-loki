@@ -34,8 +34,8 @@ ingester:
       cpu: 200m
       memory: 500Mi
   replicas: 2
-  nodeSelector:
-    lifecycle: spot
+  # nodeSelector:
+  #   lifecycle: spot
 
 querier:
   replicas: 3 # Improve query performance via parallelism
@@ -56,8 +56,8 @@ distributor:
     requests:
       cpu: 100m
       memory: 256Mi
-  nodeSelector:
-    lifecycle: spot
+  # nodeSelector:
+  #   lifecycle: spot
 
 memcachedChunks:
   enabled: true
@@ -73,8 +73,8 @@ memcachedChunks:
     limits:
       cpu: 1
       memory: 2Gi
-  nodeSelector:
-    lifecycle: spot
+  # nodeSelector:
+  #   lifecycle: spot
 
 
 compactor:
@@ -129,8 +129,8 @@ memcachedIndexQueries:
       cpu: 500m
       memory: 1Gi
   enabled: true
-  nodeSelector:
-    lifecycle: spot
+  # nodeSelector:
+  #   lifecycle: spot
 
 memcachedExporter:
   enabled: true
