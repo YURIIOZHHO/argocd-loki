@@ -24,8 +24,8 @@ deploymentMode: Distributed
 ingester:
   persistence:
     enabled: true
-    storageClass: gp2
-    size: 5G
+    storageClassName: gp2
+    size: 5Gi
   resources:
     limits:
       cpu: 1
