@@ -1,4 +1,13 @@
 loki:
+  storage:
+    type: "s3"
+    s3:
+      region: eu-central-1
+    bucketNames:
+      chunks: loki-s3-bucket-13-03-2026
+      ruler: loki-s3-bucket-13-03-2026
+      admin: loki-s3-bucket-13-03-2026
+
   schemaConfig:
     configs:
       - from: "2024-04-01"
