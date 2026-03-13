@@ -51,10 +51,10 @@ distributor:
   maxUnavailable: 2
   resources:
     limits:
-      cpu: 100m
-      memory: 256Mi
-    requests:
       cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 100m
       memory: 256Mi
   nodeSelector:
     lifecycle: spot
