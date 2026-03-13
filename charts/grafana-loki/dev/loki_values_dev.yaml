@@ -1,20 +1,4 @@
 loki:
-  # Настройки для компонента memcached-chunks-cache
-  chunksCache:
-    enabled: true
-    # Настройки ресурсов пода в Kubernetes
-    resources:
-      requests:
-        cpu: 100m
-        memory: 512Mi   # Вместо 9830Mi
-      limits:
-        cpu: 500m
-        memory: 1Gi     # Вместо 9830Mi
-    # Настройки самого процесса memcached
-    memcached:
-      # Этот параметр меняет флаг -m в аргументах запуска
-      chunk_size: 512
-
   schemaConfig:
     configs:
       - from: "2024-04-01"
@@ -60,6 +44,21 @@ distributor:
     requests:
       cpu: 100m
       memory: 256Mi
+
+chunksCache:
+  enabled: true
+  # Настройки ресурсов пода в Kubernetes
+  resources:
+    requests:
+      cpu: 100m
+      memory: 512Mi   # Вместо 9830Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi     # Вместо 9830Mi
+  # Настройки самого процесса memcached
+  memcached:
+    # Этот параметр меняет флаг -m в аргументах запуска
+    chunk_size: 512
 
 compactor:
   replicas: 1
