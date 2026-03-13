@@ -28,11 +28,11 @@ ingester:
     size: 5G
   resources:
     limits:
-      cpu: 200m
-      memory: 1Gi
-    requests:
       cpu: 1
       memory: 1Gi
+    requests:
+      cpu: 200
+      memory: 500Mi
   replicas: 2
   nodeSelector:
     lifecycle: spot
