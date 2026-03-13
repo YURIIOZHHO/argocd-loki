@@ -9,7 +9,7 @@ datasources:
         isDefault: true
       - name: Loki
         type: loki
-        url: http://loki-query-frontend.grafana-loki.svc.cluster.local:3100
+        url: http://loki-gateway.grafana-loki.svc.cluster.local
         access: proxy
 # grafana.ini:
 #   database:
