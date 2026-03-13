@@ -47,17 +47,14 @@ distributor:
 
 chunksCache:
   enabled: true
-  # Настройки ресурсов пода в Kubernetes
   resources:
     requests:
       cpu: 100m
-      memory: 512Mi   # Вместо 9830Mi
+      memory: 512Mi   
     limits:
       cpu: 500m
-      memory: 1Gi     # Вместо 9830Mi
-  # Настройки самого процесса memcached
+      memory: 1Gi    
   memcached:
-    # Этот параметр меняет флаг -m в аргументах запуска
     chunk_size: 512
 
 compactor:
