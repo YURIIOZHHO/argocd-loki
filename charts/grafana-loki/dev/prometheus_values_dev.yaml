@@ -12,12 +12,12 @@ server:
   #   limits:
   #     memory: 2Gi
 
-  # persistentVolume:
-  #   enabled: true
-  #   size: 20Gi
-  #   accessModes:
-  #     - ReadWriteOnce
-  #   storageClass: gp2
+  persistentVolume:
+    enabled: true
+    size: 20Gi
+    accessModes:
+      - ReadWriteOnce
+    storageClass: gp2
 
 prometheus-node-exporter:
   enabled: true
