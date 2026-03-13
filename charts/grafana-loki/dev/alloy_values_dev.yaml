@@ -26,15 +26,15 @@ alloy:
           source_labels = ["__meta_kubernetes_pod_name"]
           target_label  = "pod"
         }
-        // container name
-        rule {
-          source_labels = ["__meta_kubernetes_pod_container_name"]
-          target_label  = "container"
-        }
-        rule {
-          source_labels = ["__meta_kubernetes_node_name"]
-          target_label  = "node"
-        }
+        # // container name
+        # rule {
+        #   source_labels = ["__meta_kubernetes_pod_container_name"]
+        #   target_label  = "container"
+        # }
+        # rule {
+        #   source_labels = ["__meta_kubernetes_node_name"]
+        #   target_label  = "node"
+        # }
       }
 
       loki.source.kubernetes "pods" {
