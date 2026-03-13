@@ -1,17 +1,16 @@
 loki:
   chunksCache:
-    enabled: true
+    # Этот блок управляет StatefulSet "loki-chunks-cache"
     memcached:
-        # Это изменит Args (-m 8192)
-      chunk_size: 1024
-        # Это изменит Requests и Limits (9830Mi)
+      # Уменьшаем аргумент -m (в МБ)
+      chunk_size: 1024 
       resources:
         requests:
           cpu: 100m
-          memory: 512Mi
+          memory: 1Gi
         limits:
           cpu: 500m
-          memory: 1Gi
+          memory: 2Gi
 
   schemaConfig:
     configs:
