@@ -48,6 +48,7 @@ queryScheduler:
 
 distributor:
   replicas: 3
+  maxUnavailable: 2
   resources:
     limits:
       cpu: 100m
