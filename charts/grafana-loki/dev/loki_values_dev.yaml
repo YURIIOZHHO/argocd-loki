@@ -32,11 +32,12 @@ loki:
 deploymentMode: Distributed
 
 ingester:
-  replicas: 3 # To ensure data durability with replication
-  max_chunk_age: 3m
-  chunk_idle_period: 3m
+  replicas: 3
+  # max_chunk_age: 3m # All chunks will be flushed when they hit this age, default is 1h
+  # chunk_idle_period: 3m  # Any chunk not receiving new logs in this time will be flushed
   zoneAwareReplication:
      enabled: false
+
 querier:
   replicas: 3 # Improve query performance via parallelism
   maxUnavailable: 2
@@ -69,6 +70,37 @@ chunksCache:
   memcached:
     chunk_size: 512
 
+
+memcachedIndexQueries:
+  replicas: 2
+  resources:
+    requests:
+      cpu: 100m
+      memory: 500Mi
+    limits:
+      cpu: 500m
+      memory: 1Gi
+  enabled: true
+
+memcachedExporter:
+  enabled: true
+  resources:
+    limits:
+      cpu: 100m
+      memory: 50Mi
+    requests:
+      cpu: 100m
+      memory: 50Mi
+
+memcachedFrontend:
+  nodeSelector:
+    lifecycle: spot
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: kube-prometheus-stack
+    interval: 30s
+
 compactor:
   replicas: 1
 indexGateway:
@@ -93,85 +125,10 @@ singleBinary:
    replicas: 0
 
  # This exposes the Loki gateway so it can be written to and queried externaly
+
 gateway:
    service:
      type: LoadBalancer
 
 
-# Enable minio for storage
-# minio:
-#   enabled: true
-#   persistence:
-#     enabled: true
-#     storageClass: gp2
-#     size: 5Gi
 
-
-
-  # nodeSelector:
-  #   lifecycle: spot
-
-
-
-# Enable minio for storage
-
-
-
-
-
-
-memcachedIndexQueries:
-  replicas: 2
-  resources:
-    requests:
-      cpu: 100m
-      memory: 500Mi
-    limits:
-      cpu: 500m
-      memory: 1Gi
-  enabled: true
-  # nodeSelector:
-  #   lifecycle: spot
-
-memcachedExporter:
-  enabled: true
-  resources:
-    limits:
-      cpu: 100m
-      memory: 50Mi
-    requests:
-      cpu: 100m
-      memory: 50Mi
-
-# queryFrontend:
-#   replicas: 3
-#   resources:
-#     requests:
-#       cpu: 200m
-#       memory: 256Mi
-#     limits:
-#       cpu: 200m
-#       memory: 256Mi
-#   nodeSelector:
-#     lifecycle: spot
-
-# querier:
-#   resources:
-#     requests:
-#       cpu: 2000m
-#       memory: 2Gi
-#     limits:
-#       cpu: 7000m
-#       memory: 10Gi
-#   replicas: 24
-#   nodeSelector:
-#     lifecycle: spot
-
-memcachedFrontend:
-  nodeSelector:
-    lifecycle: spot
-  serviceMonitor:
-    enabled: true
-    labels:
-      release: kube-prometheus-stack
-    interval: 30s
