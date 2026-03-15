@@ -33,6 +33,8 @@ deploymentMode: Distributed
 
 ingester:
   replicas: 3 # To ensure data durability with replication
+  max_chunk_age: 3m
+  chunk_idle_period: 3m
   zoneAwareReplication:
      enabled: false
 querier:
@@ -43,6 +45,7 @@ queryFrontend:
   maxUnavailable: 1
 queryScheduler:
   replicas: 2
+
 distributor:
   replicas: 3
   maxUnavailable: 2
