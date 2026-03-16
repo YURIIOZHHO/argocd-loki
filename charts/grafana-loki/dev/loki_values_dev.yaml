@@ -18,10 +18,11 @@ loki:
           prefix: loki_index_
           period: 24h
   ingester:
-    chunk_encoding: snappy
-    chunk_idle_period: 3m
-    max_chunk_age: 3m
-    chunk_target_size: 1572864
+    chunk_encoding: snappy # це дефолт з документації
+    # тут ми визначаємо за яких умов будуть писатись логи в s3. Це маленькі значення так його точно не треба залишати, я його для тесту робив. Воно по хорошому має бути ну хочаб 1г +
+    chunk_idle_period: 3m # якщо 3 хв не буде отримуватись нових логів, то ми записуємо в s3
+    max_chunk_age: 3m # час життя чанка(невеликий блок логів), тобто воно повинно після 3 хв життя цього чанку записати його в s3 
+    chunk_target_size: 1572864 # size of chunk(in bytes) - і це здається дефолтний розмір
 
   querier:
     # Default is 4, if you have enough memory and CPU you can increase, reduce if OOMing
@@ -42,6 +43,8 @@ ingester:
   # chunk_idle_period: 3m  # Any chunk not receiving new logs in this time will be flushed
   zoneAwareReplication:
      enabled: false
+
+# більша частина самих компонентів взята з документації, але налаштування ресурсів кастомне і їх треба буде дивитися.
 
 querier:
   replicas: 3 # Improve query performance via parallelism
