@@ -1,6 +1,7 @@
 alloy:
   mounts:
     varlog: true
+  # закоментовані рядки в content вроді не вплинули на відображення лейблів в графані.   
   configMap:
     content: |
       logging {
