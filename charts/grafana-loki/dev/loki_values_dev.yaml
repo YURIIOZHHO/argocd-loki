@@ -31,6 +31,7 @@ loki:
   limits_config:
     allow_structured_metadata: true
     volume_enabled: true
+    retention_period: 168h
 
 
 deploymentMode: Distributed
@@ -95,9 +96,6 @@ memcachedExporter:
     requests:
       cpu: 100m
       memory: 50Mi
-
-limits_config:
-  retention_period: 168h
 
 compactor:
   replicas: 1
