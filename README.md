@@ -29,7 +29,7 @@
   become: true
 
   roles:
-    - logrotate-config #role's name
+    - logrotate-config # Role's name
 ```
 **In this case, the playbook runs the `logrotate-config` role on all hosts that belong to the servers group defined in the inventory file**
 
@@ -91,7 +91,7 @@
     msg: "Finished"
 ```
 
-The `templates` directory contains the `custom-logrotate.j2` template, which defines the log rotation policy.
+**The `templates` directory contains the `custom-logrotate.j2` template, which defines the log rotation policy.**
 
 ```jinja2
 /var/log/*.log
@@ -110,3 +110,5 @@ The `templates` directory contains the `custom-logrotate.j2` template, which def
 {% endif %}
 }
 ```
+
+**From the ```logrotate``` directory, run the following command to execute the Ansible playbook: ```ansible-playbook -i inventory.ini playbook.yaml```**
