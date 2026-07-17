@@ -1,4 +1,4 @@
-##Instructions for Using the Logrotate Ansible Role.
+## Instructions for Using the Logrotate Ansible Role.
 
 **The Logrotate Ansible role has the following structure:**
 ```
