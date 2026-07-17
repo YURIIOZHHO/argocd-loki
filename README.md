@@ -21,7 +21,7 @@
 1.1.1.1 ansible_user=ec2-user ansible_ssh_private_key_file=/home/ec2-user/key.pem
 ```
 
-**2. The `playbook.yaml` file defines which hosts the role will be executed on and applies the `logrotate-config` role to those hosts..**
+**2. The `playbook.yaml` file defines which hosts the role will be executed on and applies the `logrotate-config` role to those hosts.**
 ```
 ---
 - name: Configure logrotate
